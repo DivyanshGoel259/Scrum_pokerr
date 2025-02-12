@@ -11,7 +11,6 @@ interface Args {
 export const joinGame = async ({data,socket,client}:Args)=>{
 
     try {
-        console.log(data)
         const gameId = data.message.gameId;
         const gameString = await client?.get(`gameId:${gameId}`);
         const game = gameString?JSON.parse(gameString):null

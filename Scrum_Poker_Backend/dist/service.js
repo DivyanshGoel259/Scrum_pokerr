@@ -13,7 +13,6 @@ exports.reset = exports.reveal = exports.voted = exports.joinGame = void 0;
 const _1 = require(".");
 const joinGame = (_a) => __awaiter(void 0, [_a], void 0, function* ({ data, socket, client }) {
     try {
-        console.log(data);
         const gameId = data.message.gameId;
         const gameString = yield (client === null || client === void 0 ? void 0 : client.get(`gameId:${gameId}`));
         const game = gameString ? JSON.parse(gameString) : null;
@@ -38,7 +37,7 @@ const voted = (_a) => __awaiter(void 0, [_a], void 0, function* ({ data, socket,
             throw new Error("Provide Valid GameID");
         }
         const playerIdIndex = game.players.findIndex((player) => {
-            player.playerId === userId;
+            return player.playerId === userId;
         });
         if (playerIdIndex == -1) {
             throw new Error("No user with This id Exists");

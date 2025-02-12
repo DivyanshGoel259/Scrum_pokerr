@@ -8,7 +8,7 @@ import * as service from "./service"
 import { RedisClientType } from "redis";
 
 const app = express()
-const PORT = 5050
+const PORT = 5000
 
 const server = app.listen(PORT, () => {
     console.log("Server is Listening on " + PORT);
@@ -40,7 +40,7 @@ app.post("/create", async (req: Request, res: Response) => {
             payload.gameId = uuid()
             payload.organizer = user;
         } else {
-            payload = await client?.get(`gameId:${gameId}`);
+            payload = await client?.get(`gameId:${payload.gameId}`);
             payload = JSON.parse(payload);
         }
         payload.players.push({ playerId: user.id, name: user.name, number: 0, voted: false })
@@ -73,7 +73,7 @@ wss.on("connection", async function connection(socket: UserWebSocket, req) {
             try {
                 const parsedData = JSON.parse(data)
 
-                switch (parsedData.message.type) {
+                switch (parsedData.type) {
                     case "join": {
                         await service.joinGame({ data: parsedData, socket, client })
                         break;

@@ -71,7 +71,7 @@ app.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             payload.organizer = user;
         }
         else {
-            payload = yield (client === null || client === void 0 ? void 0 : client.get(`gameId:${gameId}`));
+            payload = yield (client === null || client === void 0 ? void 0 : client.get(`gameId:${payload.gameId}`));
             payload = JSON.parse(payload);
         }
         payload.players.push({ playerId: user.id, name: user.name, number: 0, voted: false });
@@ -102,7 +102,7 @@ wss.on("connection", function connection(socket, req) {
                 return __awaiter(this, void 0, void 0, function* () {
                     try {
                         const parsedData = JSON.parse(data);
-                        switch (parsedData.message.type) {
+                        switch (parsedData.type) {
                             case "join": {
                                 yield service.joinGame({ data: parsedData, socket, client });
                                 break;
